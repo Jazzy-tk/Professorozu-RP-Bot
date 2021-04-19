@@ -8,15 +8,15 @@ class Roleplay(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='Good')
-    async def Gm(self, ctx, *, context):
-        context = ['morning Professorozu!',
-                'morning professorozu! how are you?']
-        responses = ['Good morning master... How was your sleep?',
-                'Good morning master... My sleep was very bad...',
-                'Good morning master! Are we up for programming today?']
+    @commands.command(aliases=['Good'])
+    async def Greeting(self, ctx, *context):
+    async def on_message(message):
+    
+        if message.content.includes('Morning'):
+            await ctx.send('good morning!')
 
-        await ctx.send(f'{random.choice(responses)}')
+        if message.contains(['evening', 'evening!', 'evening.']):
+            await ctx.send('Good evening!')
 
 def setup(client):
     client.add_cog(Roleplay(client))

@@ -15,5 +15,10 @@ class General(commands.Cog):
     async def Works(self, ctx):
         await ctx.send('Worked!')
 
+    @commands.command()
+    async def ping(self, ctx, member : discord.Member):
+        await ctx.send(f"I ping you, {member}")
+
+
 def setup(client):
     client.add_cog(General(client))
