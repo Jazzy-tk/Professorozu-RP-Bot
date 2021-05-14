@@ -13,7 +13,7 @@ client.remove_command("help")
 
 @client.command(pass_context = True, aliases = ['Help', 'help'])
 async def _Help(ctx):
-    author = ctx.message.author
+    #author = ctx.message.author #Defines the author for future code
 
     embed = discord.Embed(colour = discord.Colour.from_rgb(235, 26, 57))
 
@@ -48,4 +48,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 
-client.run('ODMxOTU3NjQxNDgzOTExMjY5.YHcy7g.jGt2omNmGFyD3Z0DFlj0LLP-Y0g')
+client.run('Your Token')
