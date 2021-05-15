@@ -28,5 +28,18 @@ class General(commands.Cog):
         await ctx.send("Now it's in lowercase")
         await ctx.send(x)
 
+    @commands.command(aliases = ["gimme", "Gimme", "Give"])
+    async def give(self, ctx):
+        content = ctx.message.content
+        content = content.lower()
+        heart = "❤️"
+
+        if "heart" in content:
+            await ctx.message.add_reaction(heart)
+            await ctx.send("Here you go! UwU")
+
+        else:
+            await ctx.send("You forgot to say what :<")
+
 def setup(client):
     client.add_cog(General(client))
