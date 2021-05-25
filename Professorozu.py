@@ -6,7 +6,7 @@ from discord import message
 
 from discord.ext import commands
 
-#import asyncio
+import asyncio
 
 client = commands.Bot(command_prefix = '-')
 client.remove_command("help")
@@ -15,7 +15,7 @@ client.remove_command("help")
 async def _Help(ctx):
     #author = ctx.message.author #Defines the author for future code
 
-    embed = discord.Embed(colour = discord.Colour.from_rgb(235, 26, 57), 
+    embed = discord.Embed(colour = discord.Colour.from_rgb(0, 0, 0), 
     title = "This is the title", 
     description = "Description of the title"
     )
@@ -30,23 +30,93 @@ async def _Help(ctx):
 
     embed.add_field(name = "Field 3", value = "Field 3 thing")
 
-    """
-    #await author.send(embed=embed) #To send a dm
-
-    msg = await ctx.send("I've sent you a pm with the help menu! :3")
-    await asyncio.sleep(5)
-    await msg.delete() #Delete the message after 5 seconds
-    """
     message = await ctx.send(embed=embed)
     
     heart_yellow = "💛"
     heart_red = "❤️"
     heart_orange = "🧡"
+    heart_black = "🖤"
+    heart_white = "🤍"
 
-    await message.add_reaction(heart_red)
     await message.add_reaction(heart_yellow)
     await message.add_reaction(heart_orange)
+    await message.add_reaction(heart_red) 
+    await message.add_reaction(heart_black)
+    await message.add_reaction(heart_white)
 
+    await asyncio.sleep(2)
+
+    @client.event
+    async def on_reaction_add(reaction, user):
+
+        no_rgb = ctx.message.content
+
+        no_rgb = no_rgb.replace("-help", " ")
+
+        Yellow_embed = discord.Embed(title="Yellow embed",
+        colour = discord.Colour.from_rgb(252, 236, 3)
+        )
+
+        Yellow_embed.add_field(name="Return", value="react with 🖤 to reset the help message")
+
+        if reaction.emoji == heart_yellow:
+            await message.edit(embed = Yellow_embed)
+            await message.remove_reaction(heart_yellow, user)
+
+        Orange_embed = discord.Embed(title="Ornage embed",
+        colour = discord.Colour.from_rgb(255, 132, 0)
+        )
+
+        Orange_embed.add_field(name="Return", value="react with 🖤 to reset the help message")
+
+        if reaction.emoji == heart_orange:
+            await message.edit(embed = Orange_embed)
+            await message.remove_reaction(heart_orange, user)
+
+        Red_embed = discord.Embed(title="Red embed",
+        colour = discord.Colour.from_rgb(255, 0, 60)
+        )
+
+        Red_embed.add_field(name="Return", value="react with 🖤 to reset the help message")
+
+        if reaction.emoji == heart_red:
+            await message.edit(embed = Red_embed)
+            await message.remove_reaction(heart_red, user)
+        
+        if reaction.emoji == heart_black:
+            await message.edit(embed=embed)
+            await message.remove_reaction(heart_black, user)
+            
+        if reaction.emoji == heart_white and no_rgb.isspace() == True:
+            error_white = discord.Embed(colour = discord.Colour.from_rgb(252, 3, 28),
+            title = "Error. Either there is no RGB code or it's written wrong",
+            description = "It has to be written with 3 numbers, a comma and white space in between and numbers that go up to 255"
+            )
+            error_white.add_field(name = "For example", value = "-help 234, 54, 54")
+            error_white.add_field(name="Return", value="react with 🖤 to reset the help message")
+            await message.edit(embed = error_white)
+            await message.remove_reaction(heart_white, user)
+
+        if reaction.emoji == heart_white:
+
+            color = ctx.message.content
+
+            color = color.replace("-help ", "")
+
+            color = color.replace(" ", "")
+
+            color = color.split(",")
+
+            color = [int(i) for i in color]
+
+            r, g, b = color
+
+            White_embed = discord.Embed(title="Your color embed",
+            colour = discord.Colour.from_rgb(r, g, b)
+            )
+
+            await message.edit(embed = White_embed)
+            await message.remove_reaction(heart_white, user)
 
 @client.command()
 async def load(ctx, extension):
@@ -61,4 +131,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 
-client.run('Token')
+client.run('token')
