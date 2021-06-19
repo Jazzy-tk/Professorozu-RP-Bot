@@ -1,4 +1,5 @@
 import discord
+from discord import message
 
 from discord.ext import commands
 

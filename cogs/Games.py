@@ -9,7 +9,7 @@ class Games(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases=['8Ball', 'God', 'osu', '8'])
+    @commands.command(aliases=['8Ball', "8ball", 'God', 'osu', '8'])
     async def _8Ball(self, ctx, *, question):
         responses = ['As I see it, yes.',
                     'Ask again later.',

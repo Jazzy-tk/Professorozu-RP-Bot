@@ -4,12 +4,54 @@ import os
 
 from discord import message
 
-from discord.ext import commands
-
 import asyncio
 
-client = commands.Bot(command_prefix = '-')
+from discord.ext import commands
+
+import random
+
+client = commands.Bot(command_prefix = '£', activity = discord.Game(name = "I'm alive!"))
 client.remove_command("help")
+
+@client.event
+async def on_ready():
+
+    while True:
+        await asyncio.sleep(60)
+
+        Activities = ["UwU",
+        "OwO",
+        "At your service!",
+        ">.>",
+        ":3",
+        "O-O",
+        "^^"
+        "._.",
+        "<3",
+        "T-T",
+        "?-?"]
+
+        await client.change_presence(activity = discord.Game(name = f'{random.choice(Activities)}'))
+
+@client.event
+async def on_message(message):
+
+    if message.author.id == 515629373567664138: #Aka Gabriel
+        await message.delete()
+
+        print(message.content)
+
+        responses = ["Naaah",
+        "You shall not text!",
+        "I said no!",
+        "Message deleted",
+        "Cry about it",
+        "This is Dark Souls rl",
+        "Shhhhhhhh child. Silence",
+        "Are you still trying?",
+        "Oh did you ask tell me to stop? Well, I can't see the message :3"]
+
+        await message.channel.send(f'{random.choice(responses)}', delete_after = 2)
 
 @client.command(pass_context = True, aliases = ['Help', 'help'])
 async def _Help(ctx):
@@ -44,14 +86,15 @@ async def _Help(ctx):
     await message.add_reaction(heart_black)
     await message.add_reaction(heart_white)
 
-    await asyncio.sleep(2)
-
     @client.event
     async def on_reaction_add(reaction, user):
 
+        if user == client.user:
+            return
+
         no_rgb = ctx.message.content
 
-        no_rgb = no_rgb.replace("-help", " ")
+        no_rgb = no_rgb.replace("£help", " ")
 
         Yellow_embed = discord.Embed(title="Yellow embed",
         colour = discord.Colour.from_rgb(252, 236, 3)
@@ -101,7 +144,7 @@ async def _Help(ctx):
 
             color = ctx.message.content
 
-            color = color.replace("-help ", "")
+            color = color.replace("£help ", "")
 
             color = color.replace(" ", "")
 
@@ -131,4 +174,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 
-client.run('token')
+client.run('Token Here')
