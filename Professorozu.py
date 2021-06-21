@@ -10,6 +10,8 @@ from discord.ext import commands
 
 import random
 
+from Token import *
+
 client = commands.Bot(command_prefix = '£', activity = discord.Game(name = "I'm alive!"))
 client.remove_command("help")
 
@@ -174,4 +176,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 
-client.run('Token Here')
+client.run(token)
